@@ -89,6 +89,7 @@ class TestCity_instantiation(unittest.TestCase):
         cy2 = City()
         self.assertLess(cy1.updated_at, cy2.updated_at)
 
+
 class TestCity_save(unittest.TestCase):
     """Unittests testing save method City class."""
 

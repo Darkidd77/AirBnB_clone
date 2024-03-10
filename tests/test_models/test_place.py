@@ -194,9 +194,9 @@ class TestPlace_save(unittest.TestCase):
         pl.save()
         self.assertLess(first_updated_at, pl.updated_at)
 
+
 class TestPlace_to_dict(unittest.TestCase):
     """Unittests testing to_dict method Place class."""
-
 
     def test_to_dict_datetime_attributes_are_strs(self):
         pl = Place()
@@ -243,6 +243,7 @@ class TestPlace_to_dict(unittest.TestCase):
         pl.my_number = 98
         self.assertEqual("Holberton", pl.middle_name)
         self.assertIn("my_number", pl.to_dict())
+
 
 if __name__ == "__main__":
     unittest.main()

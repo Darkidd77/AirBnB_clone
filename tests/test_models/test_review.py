@@ -51,6 +51,7 @@ class TestReview_instantiation(unittest.TestCase):
         sleep(0.05)
         rv2 = Review()
         self.assertLess(rv1.updated_at, rv2.updated_at)
+
     def test_no_args_instantiates(self):
         self.assertEqual(Review, type(Review()))
 
@@ -115,7 +116,6 @@ class TestReview_save(unittest.TestCase):
         except IOError:
             pass
 
-
     def test_two_saves(self):
         rv = Review()
         sleep(0.05)
@@ -145,6 +145,7 @@ class TestReview_save(unittest.TestCase):
         first_updated_at = rv.updated_at
         rv.save()
         self.assertLess(first_updated_at, rv.updated_at)
+
 
 class TestReview_to_dict(unittest.TestCase):
     """Unittests testing to_dict method Review class."""

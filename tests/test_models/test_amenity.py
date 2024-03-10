@@ -13,6 +13,7 @@ import os
 import models
 import unittest
 
+
 class TestAmenity_instantiation(unittest.TestCase):
     """Unittests for instantiation Amenity class."""
 
@@ -63,6 +64,7 @@ class TestAmenity_instantiation(unittest.TestCase):
         self.assertEqual(am.id, "345")
         self.assertEqual(am.created_at, dt)
         self.assertEqual(am.updated_at, dt)
+
     def test_no_args_instantiates(self):
         self.assertEqual(Amenity, type(Amenity()))
 
@@ -129,6 +131,7 @@ class TestAmenity_save(unittest.TestCase):
         amid = "Amenity." + am.id
         with open("file.json", "r") as f:
             self.assertIn(amid, f.read())
+
     def test_one_save(self):
         am = Amenity()
         sleep(0.05)
@@ -168,6 +171,7 @@ class TestAmenity_to_dict(unittest.TestCase):
         am = Amenity()
         with self.assertRaises(TypeError):
             am.to_dict(None)
+
     def test_to_dict_type(self):
         self.assertTrue(dict, type(Amenity().to_dict()))
 

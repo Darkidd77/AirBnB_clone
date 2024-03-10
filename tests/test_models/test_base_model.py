@@ -39,6 +39,7 @@ class TestBaseModel_instantiation(unittest.TestCase):
         sleep(0.05)
         bm2 = BaseModel()
         self.assertLess(bm1.updated_at, bm2.updated_at)
+
     def test_no_args_instantiates(self):
         self.assertEqual(BaseModel, type(BaseModel()))
 
@@ -128,6 +129,7 @@ class TestBaseModel_save(unittest.TestCase):
         bmid = "BaseModel." + bm.id
         with open("file.json", "r") as f:
             self.assertIn(bmid, f.read())
+
     def test_one_save(self):
         bm = BaseModel()
         sleep(0.05)
