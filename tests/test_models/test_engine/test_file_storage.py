@@ -165,6 +165,5 @@ class TestFileStorage_methods(unittest.TestCase):
             models.storage.save(None)
 
 
-
 if __name__ == "__main__":
     unittest.main()
