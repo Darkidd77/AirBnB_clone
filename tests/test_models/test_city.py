@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Defines unittests for models/city.py.
+"""Defines unittests models/city.py.
 
 Unittest classes:
     TestCity_instantiation
@@ -7,18 +7,46 @@ Unittest classes:
     TestCity_to_dict
 """
 import os
-import models
-import unittest
 from datetime import datetime
 from time import sleep
 from models.city import City
+import models
+import unittest
 
 
 class TestCity_instantiation(unittest.TestCase):
-    """Unittests for testing instantiation of the City class."""
+    """Unittests testing instantiation City class."""
 
     def test_no_args_instantiates(self):
         self.assertEqual(City, type(City()))
+
+    def test_str_representation(self):
+        dt = datetime.today()
+        dt_repr = repr(dt)
+        cy = City()
+        cy.id = "123456"
+        cy.created_at = cy.updated_at = dt
+        cystr = cy.__str__()
+        self.assertIn("[City] (123456)", cystr)
+        self.assertIn("'id': '123456'", cystr)
+        self.assertIn("'created_at': " + dt_repr, cystr)
+        self.assertIn("'updated_at': " + dt_repr, cystr)
+
+    def test_args_unused(self):
+        cy = City(None)
+        self.assertNotIn(None, cy.__dict__.values())
+
+    def test_instantiation_with_kwargs(self):
+        dt = datetime.today()
+        dt_iso = dt.isoformat()
+        cy = City(id="345", created_at=dt_iso, updated_at=dt_iso)
+        self.assertEqual(cy.id, "345")
+        self.assertEqual(cy.created_at, dt)
+        self.assertEqual(cy.updated_at, dt)
+
+    def test_instantiation_with_None_kwargs(self):
+        with self.assertRaises(TypeError):
+            City(id=None, created_at=None, updated_at=None)
 
     def test_new_instance_stored_in_objects(self):
         self.assertIn(City(), models.storage.all().values())
@@ -61,37 +89,8 @@ class TestCity_instantiation(unittest.TestCase):
         cy2 = City()
         self.assertLess(cy1.updated_at, cy2.updated_at)
 
-    def test_str_representation(self):
-        dt = datetime.today()
-        dt_repr = repr(dt)
-        cy = City()
-        cy.id = "123456"
-        cy.created_at = cy.updated_at = dt
-        cystr = cy.__str__()
-        self.assertIn("[City] (123456)", cystr)
-        self.assertIn("'id': '123456'", cystr)
-        self.assertIn("'created_at': " + dt_repr, cystr)
-        self.assertIn("'updated_at': " + dt_repr, cystr)
-
-    def test_args_unused(self):
-        cy = City(None)
-        self.assertNotIn(None, cy.__dict__.values())
-
-    def test_instantiation_with_kwargs(self):
-        dt = datetime.today()
-        dt_iso = dt.isoformat()
-        cy = City(id="345", created_at=dt_iso, updated_at=dt_iso)
-        self.assertEqual(cy.id, "345")
-        self.assertEqual(cy.created_at, dt)
-        self.assertEqual(cy.updated_at, dt)
-
-    def test_instantiation_with_None_kwargs(self):
-        with self.assertRaises(TypeError):
-            City(id=None, created_at=None, updated_at=None)
-
-
 class TestCity_save(unittest.TestCase):
-    """Unittests for testing save method of the City class."""
+    """Unittests testing save method City class."""
 
     @classmethod
     def setUp(self):
@@ -142,7 +141,7 @@ class TestCity_save(unittest.TestCase):
 
 
 class TestCity_to_dict(unittest.TestCase):
-    """Unittests for testing to_dict method of the City class."""
+    """Unittests testing to_dict method City class."""
 
     def test_to_dict_type(self):
         self.assertTrue(dict, type(City().to_dict()))

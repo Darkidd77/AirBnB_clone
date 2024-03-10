@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Defines unittests for models/review.py.
+"""Defines unittests models/review.py.
 
 Unittest classes:
     TestReview_instantiation
@@ -7,30 +7,15 @@ Unittest classes:
     TestReview_to_dict
 """
 import os
-import models
 import unittest
 from datetime import datetime
 from time import sleep
 from models.review import Review
+import models
 
 
 class TestReview_instantiation(unittest.TestCase):
-    """Unittests for testing instantiation of the Review class."""
-
-    def test_no_args_instantiates(self):
-        self.assertEqual(Review, type(Review()))
-
-    def test_new_instance_stored_in_objects(self):
-        self.assertIn(Review(), models.storage.all().values())
-
-    def test_id_is_public_str(self):
-        self.assertEqual(str, type(Review().id))
-
-    def test_created_at_is_public_datetime(self):
-        self.assertEqual(datetime, type(Review().created_at))
-
-    def test_updated_at_is_public_datetime(self):
-        self.assertEqual(datetime, type(Review().updated_at))
+    """Unittests testing instantiation Review class."""
 
     def test_place_id_is_public_class_attribute(self):
         rv = Review()
@@ -66,6 +51,20 @@ class TestReview_instantiation(unittest.TestCase):
         sleep(0.05)
         rv2 = Review()
         self.assertLess(rv1.updated_at, rv2.updated_at)
+    def test_no_args_instantiates(self):
+        self.assertEqual(Review, type(Review()))
+
+    def test_new_instance_stored_in_objects(self):
+        self.assertIn(Review(), models.storage.all().values())
+
+    def test_id_is_public_str(self):
+        self.assertEqual(str, type(Review().id))
+
+    def test_created_at_is_public_datetime(self):
+        self.assertEqual(datetime, type(Review().created_at))
+
+    def test_updated_at_is_public_datetime(self):
+        self.assertEqual(datetime, type(Review().updated_at))
 
     def test_str_representation(self):
         dt = datetime.today()
@@ -97,7 +96,7 @@ class TestReview_instantiation(unittest.TestCase):
 
 
 class TestReview_save(unittest.TestCase):
-    """Unittests for testing save method of the Review class."""
+    """Unittests testing save method Review class."""
 
     @classmethod
     def setUp(self):
@@ -116,12 +115,6 @@ class TestReview_save(unittest.TestCase):
         except IOError:
             pass
 
-    def test_one_save(self):
-        rv = Review()
-        sleep(0.05)
-        first_updated_at = rv.updated_at
-        rv.save()
-        self.assertLess(first_updated_at, rv.updated_at)
 
     def test_two_saves(self):
         rv = Review()
@@ -146,9 +139,15 @@ class TestReview_save(unittest.TestCase):
         with open("file.json", "r") as f:
             self.assertIn(rvid, f.read())
 
+    def test_one_save(self):
+        rv = Review()
+        sleep(0.05)
+        first_updated_at = rv.updated_at
+        rv.save()
+        self.assertLess(first_updated_at, rv.updated_at)
 
 class TestReview_to_dict(unittest.TestCase):
-    """Unittests for testing to_dict method of the Review class."""
+    """Unittests testing to_dict method Review class."""
 
     def test_to_dict_type(self):
         self.assertTrue(dict, type(Review().to_dict()))
